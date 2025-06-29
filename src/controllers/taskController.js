@@ -35,7 +35,15 @@ const acharTarefa = (req, res) => {
 }
 
 const excluirTarefa = (req, res) => {
+    const {id} = req.params;
 
+    const indexToRemove = tarefasTeste.findIndex(item => item.id === parseInt(id, 10));
+
+    if (indexToRemove !== -1) {
+        tarefasTeste.splice(indexToRemove, 1);
+    }
+
+    res.status(200).json({});
 }
 
 module.exports = {
