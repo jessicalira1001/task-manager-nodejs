@@ -26,8 +26,22 @@ const atualizarTarefa = (req, res) => {
     
 }
 
+const acharTarefa = (req, res) => {
+    const {id} = req.params;
+
+    const objeto = tarefasTeste.find(item => item.id === parseInt(id, 10));
+        
+    res.status(200).json(objeto.descricao);
+}
+
+const excluirTarefa = (req, res) => {
+
+}
+
 module.exports = {
     listarTarefas,
     criarTarefa,
-    atualizarTarefa
+    atualizarTarefa,
+    acharTarefa,
+    excluirTarefa
 };
