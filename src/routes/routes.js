@@ -1,9 +1,10 @@
 const express = require('express');
-const listarTarefas = require("../controllers/taskController")
+const { criarTarefa, listarTarefas} = require("../controllers/taskController")
+
 
 const rotas = express.Router();
 
-//rotas.post("/task");
+rotas.post("/task", criarTarefa);
 //rotas.put("/task/:id?");
 rotas.get("/task", listarTarefas);
 //rotas.get("/task/:id?")
