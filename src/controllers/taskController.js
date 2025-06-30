@@ -1,7 +1,12 @@
 const tarefasTeste = require("../bdTeste")
+const client = require('../config/conexao.js')
+const selectTasks = require('../models/taskModel.js')
 
-const listarTarefas = (req, res) => {
-    res.send(tarefasTeste);
+const listarTarefas = async (req, res) => {
+     const listaDeTasks = await selectTasks();
+     console.log("Aqui é controller")
+     console.log(listaDeTasks)
+     res.status(200).json(listaDeTasks)
 }
 
 const criarTarefa = (req, res) => {
