@@ -1,54 +1,44 @@
 const tarefasTeste = require("../bdTeste")
-const client = require('../config/conexao.js')
-const selectTasks = require('../models/taskModel.js')
+const {insertTask, selectTasks, updateTask, selectTaskId, deleteTask } = require('../models/taskModel.js')
+
 
 const listarTarefas = async (req, res) => {
+
      const listaDeTasks = await selectTasks();
-     console.log("Aqui é controller")
-     console.log(listaDeTasks)
      res.status(200).json(listaDeTasks)
 }
 
-const criarTarefa = (req, res) => {
+const criarTarefa = async (req, res) => {
     
     const {id, descricao} = req.body;
-
-    tarefasTeste.push({id, descricao})
-
-    res.status(201).json({ id, descricao });
+    
+    const newTask = await insertTask(id, descricao);
+    res.status(201).json(newTask);
 }
 
-const atualizarTarefa = (req, res) => {
-    const {id} = req.params;
+const atualizarTarefa = async (req, res) => {
 
+    const {id} = req.params;
     const {descricao} = req.body;
 
-    const objeto = tarefasTeste.find(item => item.id === parseInt(id, 10));
-        if (objeto) {
-            objeto.descricao = descricao; 
-        }
-    res.status(200).json(objeto);
-    
+    const taskAtualizada = await updateTask(descricao, id);
+    res.status(201).json(taskAtualizada);
 }
 
-const acharTarefa = (req, res) => {
+const acharTarefa = async (req, res) => {
+
     const {id} = req.params;
 
-    const objeto = tarefasTeste.find(item => item.id === parseInt(id, 10));
-        
-    res.status(200).json(objeto.descricao);
+    const taskEncontrada = await selectTaskId(id);    
+    res.status(200).json(taskEncontrada);
 }
 
-const excluirTarefa = (req, res) => {
+const excluirTarefa = async (req, res) => {
+
     const {id} = req.params;
 
-    const indexToRemove = tarefasTeste.findIndex(item => item.id === parseInt(id, 10));
-
-    if (indexToRemove !== -1) {
-        tarefasTeste.splice(indexToRemove, 1);
-    }
-
-    res.status(200).json({});
+    const taskExcluida = await deleteTask(id);
+    res.status(200).json(taskExcluida);
 }
 
 module.exports = {
