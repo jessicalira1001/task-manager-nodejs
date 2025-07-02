@@ -1,6 +1,6 @@
 const tarefasTeste = require("../bdTeste")
 //const client = require('../config/conexao.js')
-const {insertTask, selectTasks } = require('../models/taskModel.js')
+const {insertTask, selectTasks, updateTask, selectTaskId, deleteTask } = require('../models/taskModel.js')
 //const = require('../models/taskModel.js')
 
 const listarTarefas = async (req, res) => {
@@ -20,37 +20,30 @@ const criarTarefa = async (req, res) => {
     res.status(201).json(newTask);
 }
 
-const atualizarTarefa = (req, res) => {
+const atualizarTarefa = async (req, res) => {
     const {id} = req.params;
 
     const {descricao} = req.body;
 
-    const objeto = tarefasTeste.find(item => item.id === parseInt(id, 10));
-        if (objeto) {
-            objeto.descricao = descricao; 
-        }
-    res.status(200).json(objeto);
+    const taskAtualizada = await updateTask(descricao, id);
+    res.status(201).json(taskAtualizada);
     
 }
 
-const acharTarefa = (req, res) => {
+const acharTarefa = async (req, res) => {
     const {id} = req.params;
 
-    const objeto = tarefasTeste.find(item => item.id === parseInt(id, 10));
+    const taskEncontrada = await selectTaskId(id);
         
-    res.status(200).json(objeto.descricao);
+    res.status(200).json(taskEncontrada);
 }
 
-const excluirTarefa = (req, res) => {
+const excluirTarefa = async (req, res) => {
     const {id} = req.params;
 
-    const indexToRemove = tarefasTeste.findIndex(item => item.id === parseInt(id, 10));
+    const taskExcluida = await deleteTask(id);
 
-    if (indexToRemove !== -1) {
-        tarefasTeste.splice(indexToRemove, 1);
-    }
-
-    res.status(200).json({});
+    res.status(200).json(taskExcluida);
 }
 
 module.exports = {

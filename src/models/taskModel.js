@@ -21,10 +21,26 @@ const selectTasks = async () => {
 
 }
 
-const updateTask = async (id, descricao)
+const updateTask = async (descricao, id) => {
+    
+    const result = await pool.query('UPDATE tasks SET descricao = $1 WHERE id = $2', [descricao, id])
+    return result.rows[0];
+}
 
+const selectTaskId = async (id) => {
+    const result = await pool.query('SELECT * FROM tasks WHERE id = $1', [id]);
+    return result.rows[0]
+}
+
+const deleteTask = async (id) => {
+    const result = await pool.query('DELETE FROM tasks WHERE id = $1', [id])
+    return result.rows[0]
+}
 
 module.exports = {
     insertTask,
-    selectTasks
+    selectTasks,
+    updateTask,
+    selectTaskId,
+    deleteTask
 };
