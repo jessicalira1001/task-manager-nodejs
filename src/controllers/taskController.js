@@ -1,6 +1,7 @@
 const tarefasTeste = require("../bdTeste")
-const client = require('../config/conexao.js')
-const selectTasks = require('../models/taskModel.js')
+//const client = require('../config/conexao.js')
+const {insertTask, selectTasks } = require('../models/taskModel.js')
+//const = require('../models/taskModel.js')
 
 const listarTarefas = async (req, res) => {
      const listaDeTasks = await selectTasks();
@@ -9,13 +10,14 @@ const listarTarefas = async (req, res) => {
      res.status(200).json(listaDeTasks)
 }
 
-const criarTarefa = (req, res) => {
-    
+const criarTarefa = async (req, res) => {
+    console.log("Passei aqui no controler antes de chamar a insertTask")
     const {id, descricao} = req.body;
-
-    tarefasTeste.push({id, descricao})
-
-    res.status(201).json({ id, descricao });
+    console.log(id)
+    console.log(descricao)
+    const newTask = await insertTask(id, descricao);
+    console.log(newTask)
+    res.status(201).json(newTask);
 }
 
 const atualizarTarefa = (req, res) => {

@@ -1,6 +1,18 @@
 const pool = require('../config/conexao.js')
 
-const selectTasks = async (req, res) => {
+
+const insertTask = async (id, descricao) => {
+    
+
+    const result = await pool.query('INSERT INTO tasks (id, descricao) VALUES ($1, $2) RETURNING *', [id, descricao]);
+    console.log("Passei aqui depois de chamar insertTask")
+    console.log(result)
+    return result.rows[0];
+
+   
+}
+
+const selectTasks = async () => {
 
     const result = await pool.query('SELECT * FROM tasks');
     console.log("Aqui é model")
@@ -9,16 +21,10 @@ const selectTasks = async (req, res) => {
 
 }
 
+const updateTask = async (id, descricao)
 
-const insertTask = async (req, res) => {
-    await client.connect()
 
-    await client.query('INSERT INTO tasks (descricao) VALUES (?)', [descricao]);
-
-    await client.end()
-}
-
-module.exports = (
+module.exports = {
     insertTask,
     selectTasks
-)
+};
