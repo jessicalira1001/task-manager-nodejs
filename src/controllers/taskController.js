@@ -1,4 +1,4 @@
-const {insertTask, selectTasks, updateTask, selectTaskId, deleteTask } = require('../models/taskModel.js')
+const {insertTask, selectTasks, updateTask, selectTaskId, deleteTask } = require('../repositories/taskRepository.js')
 
 
 const listarTarefas = async (req, res) => {

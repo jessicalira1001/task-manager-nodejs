@@ -1,4 +1,4 @@
-const pool = require('../config/conexao.js')
+const pool = require('../models/db.js')
 
 const insertTask = async (id, descricao) => {
     
