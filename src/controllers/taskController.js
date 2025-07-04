@@ -1,49 +1,43 @@
-const {insertTask, selectTasks, updateTask, selectTaskId, deleteTask } = require('../repositories/taskRepository.js')
+const {listTasks, createTask, findTaskById, setTask, removeTask} = require('../services/taskService.js')
 
-
-const listarTarefas = async (req, res) => {
-
-     const listaDeTasks = await selectTasks();
-     res.status(200).json(listaDeTasks)
+const getTasks = async (req, res) => {
+     const listaDeTasks = await listTasks();
+     res.status(200).json(listaDeTasks);
 }
 
-const criarTarefa = async (req, res) => {
-    
+const postTask = async (req, res) => {
     const {id, descricao} = req.body;
     
-    const newTask = await insertTask(id, descricao);
+    const newTask = await createTask(id, descricao);
     res.status(201).json(newTask);
 }
 
-const atualizarTarefa = async (req, res) => {
-
-    const {id} = req.params;
-    const {descricao} = req.body;
-
-    const taskAtualizada = await updateTask(descricao, id);
-    res.status(201).json(taskAtualizada);
-}
-
-const acharTarefa = async (req, res) => {
-
+const getTaskById = async (req, res) => {
     const {id} = req.params;
 
-    const taskEncontrada = await selectTaskId(id);    
+    const taskEncontrada = await findTaskById(id);    
     res.status(200).json(taskEncontrada);
 }
 
-const excluirTarefa = async (req, res) => {
+const putTask = async (req, res) => {
+    const {id} = req.params;
+    const {descricao} = req.body;
 
+    const taskAtualizada = await setTask(descricao, id);
+    res.status(201).json(taskAtualizada);
+}
+
+const deleteTask = async (req, res) => {
     const {id} = req.params;
 
-    const taskExcluida = await deleteTask(id);
+    const taskExcluida = await removeTask(id);
     res.status(200).json(taskExcluida);
 }
 
 module.exports = {
-    listarTarefas,
-    criarTarefa,
-    atualizarTarefa,
-    acharTarefa,
-    excluirTarefa
+    getTasks,
+    postTask,
+    putTask,
+    getTaskById,
+    deleteTask
 };

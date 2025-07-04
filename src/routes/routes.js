@@ -1,14 +1,14 @@
 const express = require('express');
-const { criarTarefa, listarTarefas, atualizarTarefa, acharTarefa, excluirTarefa} = require("../controllers/taskController")
+const { postTask, getTasks, putTask, getTaskById, deleteTask} = require("../controllers/taskController")
 
 
 const rotas = express.Router();
 
-rotas.post("/task", criarTarefa);
-rotas.put("/task/:id", atualizarTarefa);
-rotas.get("/task", listarTarefas);
-rotas.get("/task/:id", acharTarefa)
-rotas.delete("/task/:id", excluirTarefa)
+rotas.post("/task", postTask);
+rotas.put("/task/:id", putTask);
+rotas.get("/task", getTasks);
+rotas.get("/task/:id", getTaskById)
+rotas.delete("/task/:id", deleteTask)
 
 
 module.exports = rotas;
