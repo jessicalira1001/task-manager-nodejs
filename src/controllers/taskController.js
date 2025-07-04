@@ -1,15 +1,11 @@
-//const { updateTask,  deleteTask } = require('../repositories/taskRepository.js')
 const {listTasks, createTask, findTaskById, setTask, removeTask} = require('../services/taskService.js')
 
 const getTasks = async (req, res) => {
-    console.log("Passei em controller")
      const listaDeTasks = await listTasks();
-     res.status(200).json(listaDeTasks)
-     
+     res.status(200).json(listaDeTasks);
 }
 
 const postTask = async (req, res) => {
-    
     const {id, descricao} = req.body;
     
     const newTask = await createTask(id, descricao);
@@ -17,7 +13,6 @@ const postTask = async (req, res) => {
 }
 
 const getTaskById = async (req, res) => {
-
     const {id} = req.params;
 
     const taskEncontrada = await findTaskById(id);    
@@ -25,7 +20,6 @@ const getTaskById = async (req, res) => {
 }
 
 const putTask = async (req, res) => {
-
     const {id} = req.params;
     const {descricao} = req.body;
 
@@ -34,7 +28,6 @@ const putTask = async (req, res) => {
 }
 
 const deleteTask = async (req, res) => {
-
     const {id} = req.params;
 
     const taskExcluida = await removeTask(id);
