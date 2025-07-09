@@ -1,7 +1,6 @@
 const express = require('express');
 const { postTask, getTasks, putTask, getTaskById, deleteTask} = require("../controllers/taskController")
 
-
 const rotas = express.Router();
 
 rotas.post("/task", postTask);

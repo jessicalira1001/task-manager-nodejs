@@ -7,14 +7,13 @@ const getTasks = async (req, res) => {
 
 const postTask = async (req, res) => {
     const {id, descricao} = req.body;
-    
-    const newTask = await createTask(id, descricao);
+    const status = "pendente";
+    const newTask = await createTask(id, descricao, status);
     res.status(201).json(newTask);
 }
 
 const getTaskById = async (req, res) => {
     const {id} = req.params;
-
     const taskEncontrada = await findTaskById(id);    
     res.status(200).json(taskEncontrada);
 }
@@ -22,14 +21,12 @@ const getTaskById = async (req, res) => {
 const putTask = async (req, res) => {
     const {id} = req.params;
     const {descricao} = req.body;
-
     const taskAtualizada = await setTask(descricao, id);
     res.status(201).json(taskAtualizada);
 }
 
 const deleteTask = async (req, res) => {
     const {id} = req.params;
-
     const taskExcluida = await removeTask(id);
     res.status(200).json(taskExcluida);
 }
