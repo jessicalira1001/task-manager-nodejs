@@ -8,9 +8,8 @@ const getTasks = async (req, res) => {
 }
 
 const postTask = async (req, res) => {
-    const {id, descricao} = req.body;
-    const status = "pendente";
-    const newTask = await createTask(id, descricao, status);
+    const {id, descricao, dataVencimento} = req.body;
+    const newTask = await createTask(id, descricao, dataVencimento);
     res.status(201).json(newTask);
 }
 
