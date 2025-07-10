@@ -8,10 +8,11 @@ const listTasks = async (status) => {
     }
 }
 
-const createTask = async (id, descricao, status) => {
+const createTask = async (id, descricao) => {
     if(!id || !descricao || id === "" || descricao === ""){
         throw new Error('É necessário um ID e uma descrição para criar uma task');
     }
+    const status = "pendente";
     return await insertTask(id, descricao, status);
 }
 
