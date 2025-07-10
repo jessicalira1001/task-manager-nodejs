@@ -1,8 +1,10 @@
 const {listTasks, createTask, findTaskById, setTask, removeTask} = require('../services/taskService.js')
 
+
 const getTasks = async (req, res) => {
-     const listaDeTasks = await listTasks();
-     res.status(200).json(listaDeTasks);
+    const {status} = req.query;
+    const listaDeTasks = await listTasks(status);
+    res.status(200).json(listaDeTasks);
 }
 
 const postTask = async (req, res) => {
@@ -20,8 +22,8 @@ const getTaskById = async (req, res) => {
 
 const putTask = async (req, res) => {
     const {id} = req.params;
-    const {descricao} = req.body;
-    const taskAtualizada = await setTask(descricao, id);
+    const {descricao, status} = req.body;
+    const taskAtualizada = await setTask(id, descricao,status);
     res.status(201).json(taskAtualizada);
 }
 
