@@ -4,7 +4,7 @@ const listTasks = async (status) => {
     if(status){
         return await selectTaskByStatus(status);
     }else{
-            return await selectTasks();
+        return await selectTasks();
     }
 }
 
