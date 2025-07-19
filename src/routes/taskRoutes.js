@@ -1,14 +1,14 @@
 const express = require('express');
 const { postTask, getTasks, putTask, getTaskById, deleteTask} = require("../controllers/taskController")
 
-const rotas = express.Router();
+const rotasTask = express.Router();
 
-rotas.post("/task", postTask);
-rotas.put("/task/:id", putTask);
-rotas.get("/task", getTasks);
-rotas.get("/task/:id", getTaskById)
-rotas.delete("/task/:id", deleteTask)
+rotasTask.post("/task", postTask);
+rotasTask.put("/task/:id", putTask);
+rotasTask.get("/task", getTasks);
+rotasTask.get("/task/:id", getTaskById)
+rotasTask.delete("/task/:id", deleteTask)
 
 
 
-module.exports = rotas;
+module.exports = rotasTask;

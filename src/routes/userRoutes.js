@@ -1,6 +1,9 @@
 const express = require("express");
 const {postUser} = require("../controllers/userController")
 
-const rotas = express.Router();
+const rotasUser = express.Router();
 
-rotas.post("/user", postUser)
+rotasUser.post("/user", postUser)
+
+
+module.exports = rotasUser;
