@@ -1,12 +1,12 @@
 const pool = require('../models/db.js')
 
 const selectTasks = async () => {
-    const result = await pool.query('SELECT * FROM tasks ORDER BY "dataVencimento" ASC');
+    const result = await pool.query('SELECT * FROM tasks ORDER BY "data_vencimento" ASC');
     return result.rows;
 }
 
-const insertTask = async (id, descricao, status, dataVencimento) => {
-    const result = await pool.query('INSERT INTO tasks (id, descricao, status, "dataVencimento") VALUES ($1, $2, $3, $4) RETURNING *', [id, descricao, status, dataVencimento]);
+const insertTask = async (descricao, status, dataVencimento) => {
+    const result = await pool.query('INSERT INTO tasks (descricao, status, data_vencimento) VALUES ($1, $2, $3) RETURNING *', [descricao, status, dataVencimento]);
     return result.rows[0];
 }
 

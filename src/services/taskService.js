@@ -8,12 +8,12 @@ const listTasks = async (status) => {
     }
 }
 
-const createTask = async (id, descricao, dataVencimento) => {
-    if(!id || !descricao || id === "" || descricao === "" || !dataVencimento || dataVencimento === ""){
+const createTask = async (descricao, dataVencimento) => {
+    if(!descricao || descricao === "" || !dataVencimento || dataVencimento === ""){
         throw new Error('É necessário um ID, uma descrição e uma data de vencimento para criar uma task');
     }
     const status = "pendente";
-    return await insertTask(id, descricao, status, dataVencimento);
+    return await insertTask(descricao, status, dataVencimento);
 }
 
 const findTaskById = async (id) => {
