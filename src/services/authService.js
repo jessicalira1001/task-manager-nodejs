@@ -1,20 +1,29 @@
-const {selectUserByEmail} = require('../repositories/userRepository.js')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const {selectUserByEmail} = require('../repositories/userRepository.js')
+const senhaJWT = require('../config/senhaJWT.js')
 
 const login = async (email, senha) => {
     const user = await selectUserByEmail(email);
     
-    if(!user){
-        throw new Error('Email ou senha invalida');
+    if(!user || user.rows.length === 0){
+        throw new Error('Email ou senha inválida');
     }
 
-    const senhaValida = await bcrypt.compare(senha, user.rows[0].senha)
+    const usuario = user.rows[0];
+
+    const senhaValida = await bcrypt.compare(senha, usuario.senha)
 
     if(!senhaValida){
         throw new Error('Email ou senha invalida');
-    }else{
-        throw new Error('Usuario autenticado');
     }
+
+const token = jwt.sign({id: usuario.id}, senhaJWT, {expiresIn: '8h'})
+
+const {senha: _, ...userLogado} = usuario;
+
+    return ({usuario: userLogado, token});
+    
 }
 
 module.exports = {
