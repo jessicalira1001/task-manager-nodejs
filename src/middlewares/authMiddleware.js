@@ -5,17 +5,17 @@ const checkUserLoggedIn = async (req, res, next) => {
     const {authorization} = req.headers;
 
     if(!authorization){
-        throw new Error("Usuário não autorizado");
+        return res.status(401).json({mensagem: "Usuário não autorizado"});
     }
 
     const token = authorization.split(' ')[1];
 
     try {
-        const tokenUser = jwt.verify(token, senhaJWT);
-
+        const decoded = jwt.verify(token, senhaJWT);
+        req.usuario = decoded;
         next();
     } catch (error){
-        throw new Error("Usuário não autorizado");
+        return res.status(403).json({mensagem: "Token inválido ou expirado"});
     }
 }
 
