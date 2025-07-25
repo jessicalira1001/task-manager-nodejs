@@ -4,13 +4,11 @@ const checkUserLoggedIn = require("../middlewares/authMiddleware")
 
 const rotasTask = express.Router();
 
-rotasTask.use(checkUserLoggedIn)
-
-rotasTask.post("/task", postTask);
-rotasTask.put("/task/:id", putTask);
-rotasTask.get("/task", getTasks);
-rotasTask.get("/task/:id", getTaskById)
-rotasTask.delete("/task/:id", deleteTask)
+rotasTask.post("/task", checkUserLoggedIn, postTask);
+rotasTask.put("/task/:id", checkUserLoggedIn, putTask);
+rotasTask.get("/task", checkUserLoggedIn, getTasks);
+rotasTask.get("/task/:id", checkUserLoggedIn, getTaskById)
+rotasTask.delete("/task/:id", checkUserLoggedIn, deleteTask)
 
 
 
