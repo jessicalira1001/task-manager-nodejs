@@ -1,7 +1,13 @@
 const {createUser} = require('../services/userService.js')
+const {userSchema} = require('../schemas/userSchema.js')
 
 const postUser = async (req, res) => {
     try{
+        const {error} = userSchema.validate(req.body);
+        if(error){
+            return res.status(400).json({mensagem: error.details[0].message});
+        }
+
         const {nome, email, senha} = req.body;
         const newUser = await createUser(nome, email, senha);
         res.status(201).json(newUser); 
