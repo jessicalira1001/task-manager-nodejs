@@ -27,15 +27,27 @@ const findTaskById = async (id) => {
     if(!id){
         throw new ApiError(400, 'É necessário fornecer um id para buscar uma task');
     }
+    const taskExiste = await selectTaskById(id);
+    if(!taskExiste){
+        throw new ApiError(400, 'Não existe task com o id informado');
+    }
     return await selectTaskById(id);
 }
 
 const setTask = async (id, descricao, status) => {
     if(!id || id === ""){
         throw new ApiError(400, 'É necessário um ID para atualizar uma task');
-    }else if((!descricao || descricao === "")&&(!status || status === "")){
+    } 
+    if((!descricao || descricao === "")&&(!status || status === "")){
         throw new ApiError(400, 'É necessário uma descrição ou um status para atualizar uma task');
-    } else if(!status){
+    }
+    
+    const taskExiste = await selectTaskById(id);
+    if(!taskExiste){
+        throw new ApiError(400, 'Não existe task com o id informado');
+    }
+
+    if(!status){
         return await updateDescricaoTask(id, descricao);
     } else if(!descricao){
         return await updateStatusTask(id, status)
@@ -47,6 +59,10 @@ const setTask = async (id, descricao, status) => {
 const removeTask = async (id) => {
     if(!id || id === ""){
         throw new ApiError(400, 'É necessário fornecer o ID referente a task que deseja excluir.');
+    }
+    const taskExiste = await selectTaskById(id);
+    if(!taskExiste){
+        throw new ApiError(400, 'Não existe task com o id informado');
     }
     return await deleteTaskById(id);
 }
