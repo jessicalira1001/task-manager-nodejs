@@ -25,7 +25,7 @@ const selectTaskById = async (id) => {
 }
 
 const selectTaskByStatus = async (status) => {
-    const result = await pool.query('SELECT * FROM tasks WHERE status = $1 ORDER BY "dataVencimento" ASC', [status]);
+    const result = await pool.query('SELECT * FROM tasks WHERE status = $1 ORDER BY "data_vencimento" ASC', [status]);
     return result.rows;
 }
 
