@@ -15,10 +15,6 @@ const listTasks = async (status) => {
 }
 
 const createTask = async (descricao, dataVencimento) => {
-    if(!descricao || descricao === "" || !dataVencimento || dataVencimento === ""){
-        throw new ApiError(400, 'É necessário fornecer uma descrição e uma data de vencimento para criar uma task');
-    }
-
     const status = "pendente";
     return await insertTask(descricao, status, dataVencimento);
 }
@@ -38,10 +34,7 @@ const setTask = async (id, descricao, status) => {
     if(!id || id === ""){
         throw new ApiError(400, 'É necessário um ID para atualizar uma task');
     } 
-    if((!descricao || descricao === "")&&(!status || status === "")){
-        throw new ApiError(400, 'É necessário uma descrição ou um status para atualizar uma task');
-    }
-    
+  
     const taskExiste = await selectTaskById(id);
     if(!taskExiste){
         throw new ApiError(400, 'Não existe task com o id informado');

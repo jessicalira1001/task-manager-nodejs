@@ -1,4 +1,4 @@
-const pool = require('../models/db.js')
+const pool = require('../config/db.js')
 
 const selectTasks = async () => {
     const result = await pool.query('SELECT * FROM tasks ORDER BY "data_vencimento" ASC');
