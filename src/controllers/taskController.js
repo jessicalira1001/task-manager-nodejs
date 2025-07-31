@@ -40,8 +40,8 @@ const getTaskById = async (req, res) => {
 const putTask = async (req, res) => {
     try {
         const {id} = req.params;
-        const {descricao, status} = req.body;
-        const taskAtualizada = await setTask(id, descricao,status);
+        const {descricao, status, dataVencimento} = req.body;
+        const taskAtualizada = await setTask(id, descricao,status, dataVencimento);
         res.status(200).json(taskAtualizada);
     } catch (error){
         const status = error.statusCode || 500;

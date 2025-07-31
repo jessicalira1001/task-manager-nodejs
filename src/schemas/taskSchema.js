@@ -27,7 +27,7 @@ const updateTaskSchema = Joi.object({
         'any.required': 'A data de vencimento é obrigatória.'
     })
 }).or('descricao', 'status', 'dataVencimento').messages({
-    'object.missing': 'É necessário uma descrição, status ou data de vencimento para atualizar uma task'
+    'object.missing': 'É necessário fornecer ao menos um campo (descrição, status ou data de vencimento) para atualizar a task'
 });
 
 
