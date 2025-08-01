@@ -4,7 +4,8 @@ const {listTasks, createTask, findTaskById, setTask, removeTask} = require('../s
 const getTasks = async (req, res) => {
     try {
         const {status} = req.query;
-        const listaDeTasks = await listTasks(status);
+        const userId = req.usuario.id
+        const listaDeTasks = await listTasks(status, userId);
         res.status(200).json(listaDeTasks);
     } catch (error) {
         const status = error.statusCode || 500;
@@ -16,7 +17,8 @@ const getTasks = async (req, res) => {
 const postTask = async (req, res) => {
     try {
         const {descricao, dataVencimento} = req.body;
-        const newTask = await createTask(descricao, dataVencimento);
+        const userId = req.usuario.id
+        const newTask = await createTask(descricao, dataVencimento, userId);
         res.status(201).json(newTask);
     } catch (error){
         const status = error.statusCode || 500;
@@ -28,7 +30,8 @@ const postTask = async (req, res) => {
 const getTaskById = async (req, res) => {
     try {
         const {id} = req.params;
-        const taskEncontrada = await findTaskById(id);    
+        const userId = req.usuario.id
+        const taskEncontrada = await findTaskById(id, userId);    
         res.status(200).json(taskEncontrada);
     } catch (error){
         const status = error.statusCode || 500;
@@ -41,7 +44,8 @@ const putTask = async (req, res) => {
     try {
         const {id} = req.params;
         const {descricao, status, dataVencimento} = req.body;
-        const taskAtualizada = await setTask(id, descricao,status, dataVencimento);
+        const userId = req.usuario.id
+        const taskAtualizada = await setTask(id, descricao,status, dataVencimento, userId);
         res.status(200).json(taskAtualizada);
     } catch (error){
         const status = error.statusCode || 500;
@@ -53,7 +57,8 @@ const putTask = async (req, res) => {
 const deleteTask = async (req, res) => {
     try {
         const {id} = req.params;
-        const taskExcluida = await removeTask(id);
+        const userId = req.usuario.id
+        const taskExcluida = await removeTask(id, userId);
         res.status(200).json(taskExcluida);
     } catch (error){
         const status = error.statusCode || 500;
