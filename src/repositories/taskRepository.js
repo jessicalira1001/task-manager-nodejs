@@ -1,7 +1,7 @@
 const pool = require('../config/db.js')
 
-const selectTasks = async () => {
-    const result = await pool.query('SELECT * FROM tasks ORDER BY "data_vencimento" ASC');
+const selectTasks = async (userId) => {
+    const result = await pool.query('SELECT * FROM tasks WHERE usuario_id = $1 ORDER BY "data_vencimento" ASC', [userId]);
     return result.rows;
 }
 
@@ -10,33 +10,33 @@ const insertTask = async (descricao, status, dataVencimento, userId) => {
     return result.rows[0];
 }
 
-const updateDescricaoTask = async (id, descricao ) => { 
-    const result = await pool.query('UPDATE tasks SET descricao = $1 WHERE id = $2', [descricao, id]);
+const updateDescricaoTask = async (id, descricao, userId) => { 
+    const result = await pool.query('UPDATE tasks SET descricao = $1 WHERE id = $2 AND usuario_id = $3', [descricao, id, userId]);
     return result.rows[0];
 }
 
-const updateStatusTask = async (id, status ) => { 
-    const result = await pool.query('UPDATE tasks SET status = $1 WHERE id = $2', [status, id]);
+const updateStatusTask = async (id, status, userId) => { 
+    const result = await pool.query('UPDATE tasks SET status = $1 WHERE id = $2 AND usuario_id = $3', [status, id, userId]);
     return result.rows[0];
 }
 
-const updateDataVencimentoTask = async (id, dataVencimento ) => { 
-    const result = await pool.query('UPDATE tasks SET data_vencimento = $1 WHERE id = $2', [dataVencimento, id]);
+const updateDataVencimentoTask = async (id, dataVencimento, userId ) => { 
+    const result = await pool.query('UPDATE tasks SET data_vencimento = $1 WHERE id = $2 AND usuario_id = $3', [dataVencimento, id, userId]);
     return result.rows[0];
 }
 
-const selectTaskById = async (id) => {
-    const result = await pool.query('SELECT * FROM tasks WHERE id = $1', [id]);
+const selectTaskById = async (id, userId) => {
+    const result = await pool.query('SELECT * FROM tasks WHERE id = $1 AND usuario_id = $2', [id, userId]);
     return result.rows[0];
 }
 
-const selectTaskByStatus = async (status) => {
-    const result = await pool.query('SELECT * FROM tasks WHERE status = $1 ORDER BY "data_vencimento" ASC', [status]);
+const selectTaskByStatus = async (status, userId) => {
+    const result = await pool.query('SELECT * FROM tasks WHERE status = $1 AND usuario_id = $2 ORDER BY "data_vencimento" ASC', [status, userId]);
     return result.rows;
 }
 
-const deleteTaskById = async (id) => {
-    const result = await pool.query('DELETE FROM tasks WHERE id = $1', [id]);
+const deleteTaskById = async (id, userId) => {
+    const result = await pool.query('DELETE FROM tasks WHERE id = $1 AND usuario_id = $2', [id, userId]);
     return result.rows[0];
 }
 
