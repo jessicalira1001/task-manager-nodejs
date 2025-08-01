@@ -14,9 +14,9 @@ const listTasks = async (status) => {
     }
 }
 
-const createTask = async (descricao, dataVencimento) => {
+const createTask = async (descricao, dataVencimento, userId) => {
     const status = "pendente";
-    return await insertTask(descricao, status, dataVencimento);
+    return await insertTask(descricao, status, dataVencimento, userId);
 }
 
 const findTaskById = async (id) => {

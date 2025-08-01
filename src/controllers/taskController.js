@@ -16,7 +16,8 @@ const getTasks = async (req, res) => {
 const postTask = async (req, res) => {
     try {
         const {descricao, dataVencimento} = req.body;
-        const newTask = await createTask(descricao, dataVencimento);
+        const userId = req.usuario.id
+        const newTask = await createTask(descricao, dataVencimento, userId);
         res.status(201).json(newTask);
     } catch (error){
         const status = error.statusCode || 500;
