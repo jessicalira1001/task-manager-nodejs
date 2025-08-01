@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const senhaJWT = require('../config/senhaJWT')
 
 const checkUserLoggedIn = async (req, res, next) => {
     const {authorization} = req.headers;
@@ -11,7 +10,7 @@ const checkUserLoggedIn = async (req, res, next) => {
     const token = authorization.split(' ')[1];
 
     try {
-        const decoded = jwt.verify(token, senhaJWT);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.usuario = decoded;
         next();
     } catch (error){

@@ -2,7 +2,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const ApiError= require('../utils/ApiError.js')
 const {selectUserByEmail} = require('../repositories/userRepository.js')
-const senhaJWT = require('../config/senhaJWT.js')
 
 const login = async (email, senha) => {
     const user = await selectUserByEmail(email);
@@ -19,7 +18,7 @@ const login = async (email, senha) => {
         throw new ApiError(401,'Email ou senha invalida');
     }
 
-    const token = jwt.sign({id: usuario.id}, senhaJWT, {expiresIn: '8h'})
+    const token = jwt.sign({id: usuario.id}, process.env.JWT_SECRET, {expiresIn: '8h'})
 
     const {senha: _, ...userLogado} = usuario;
 
