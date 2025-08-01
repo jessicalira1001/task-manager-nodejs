@@ -1,5 +1,5 @@
 const ApiError= require('../utils/ApiError.js')
-const {insertTask, selectTasks, selectTaskById, deleteTaskById, updateDescricaoTask, updateStatusTask, selectTaskByStatus } = require('../repositories/taskRepository.js')
+const {insertTask, selectTasks, selectTaskById, deleteTaskById, updateDescricaoTask, updateStatusTask, updateDataVencimentoTask, selectTaskByStatus } = require('../repositories/taskRepository.js')
 
 const listTasks = async (status) => {
     const statusValidos = ['pendente', 'concluida'];
@@ -30,7 +30,7 @@ const findTaskById = async (id) => {
     return await selectTaskById(id);
 }
 
-const setTask = async (id, descricao, status) => {
+const setTask = async (id, descricao, status, dataVencimento) => {
     if(!id || id === ""){
         throw new ApiError(400, 'É necessário um ID para atualizar uma task');
     } 
@@ -40,13 +40,22 @@ const setTask = async (id, descricao, status) => {
         throw new ApiError(400, 'Não existe task com o id informado');
     }
 
-    if(!status){
-        return await updateDescricaoTask(id, descricao);
-    } else if(!descricao){
-        return await updateStatusTask(id, status)
-    } else {
-        return await updateDescricaoTask(id, descricao).then(() => updateStatusTask(id, status));
+    const promises = [];
+
+    if (descricao) {
+        promises.push(updateDescricaoTask(id, descricao));
     }
+
+    if (status) {
+        promises.push(updateStatusTask(id, status));
+    }
+
+    if (dataVencimento) {
+        promises.push(updateDataVencimentoTask(id, dataVencimento));
+    }
+
+    await Promise.all(promises);
+
 }
 
 const removeTask = async (id) => {

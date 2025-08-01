@@ -14,8 +14,14 @@ const updateDescricaoTask = async (id, descricao ) => {
     const result = await pool.query('UPDATE tasks SET descricao = $1 WHERE id = $2', [descricao, id]);
     return result.rows[0];
 }
+
 const updateStatusTask = async (id, status ) => { 
     const result = await pool.query('UPDATE tasks SET status = $1 WHERE id = $2', [status, id]);
+    return result.rows[0];
+}
+
+const updateDataVencimentoTask = async (id, dataVencimento ) => { 
+    const result = await pool.query('UPDATE tasks SET data_vencimento = $1 WHERE id = $2', [dataVencimento, id]);
     return result.rows[0];
 }
 
@@ -39,6 +45,7 @@ module.exports = {
     selectTasks,
     updateDescricaoTask,
     updateStatusTask,
+    updateDataVencimentoTask,
     selectTaskById,
     deleteTaskById,
     selectTaskByStatus
